@@ -1,0 +1,169 @@
+<--- GETTING STARTED --->
+
+Material UI is a collection of prebuild react components that adhere to the Material design philosophy developed by Google. By using these components we get a very professional and familiar look to our applications. We use props/attributes to set the options of our material components.
+
+The lifecycle of Material UI is importing/installing the package you need (core, icons, etc.), importing the components you need in said file, using the components as you could jsx tags, and passing in props to customise the styling/behaviour/layout.
+
+This is restrictive but it creates professional looking results quickly.
+
+To begin (after setting up the barebones of a react app) you can go to https://mui.com/ and click get started. This will give us the different options for installing/including the library in our project e.g. 'npm install @mui/material @emotion/react @emotion/styled'.
+
+Material UI uses the Roboto font but weirdly this isn't included in the package. Instead we can include it by pasting the following in the head of our public/index.html
+
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+
+There are also icons we will want to include but we'll come to this later.
+
+<--- TYPOGRAPHY COMPONENT --->
+
+Just like our own custom made components the first thing we need to do is import them.
+
+    import Typography from '@mui/material/Typography';
+
+    or
+
+    import {Typography} from "@mui/material";
+
+The {} is slightly less performant BUT we can use destructuring to import multiple components within the braces, rather than a new line for each specific import location without braces.
+
+Now we can go ahead and use this component
+
+    import React from "react";
+    import { Typography } from "@mui/material";
+
+    export default function Create() {
+    return (
+        <div>
+        <Typography>Create a new note</Typography>
+        </div>
+    );
+    }   
+
+By default this component will render the child as a paragraph.
+
+We alter Material Component behaviour by passing in props (or are they attributes?). For example, we can have this be an h1 instead of a p
+
+    import React from "react";
+    import { Typography } from "@mui/material";
+
+    export default function Create() {
+    return (
+        <div>
+        <Typography variant="h1">Create a new note</Typography>
+        </div>
+    );
+    }
+
+Here's an example with more styling defined
+
+    <Typography variant="h1" color="primary" align="center">
+        Create a new note
+    </Typography>
+
+Material has predefined colours, primary being a blue, secondary being a purple/pink etc.
+
+We can see all of the props a component can take by finding it in the docs and clicking API.
+
+The component prop overwrites the variant prop so the following will be styled on the page like an h6 but the html will list it as an h2
+
+    <Typography variant="h6" component="h2">
+        Create a New Note
+    </Typography>
+
+I'm not sure why we would want to do this other than for SEO reasons...
+
+Some props do not need to be passed a value but just to be included. For example, gutterBottom will add a gap to the bottom of the text without being passed a value
+
+    <Typography
+        variant="h6"
+        component="h2"
+        gutterBottom
+        color="textSecondary"
+    >
+        Create a New Note
+    </Typography>
+
+<--- BUTTON COMPONENTS --->
+
+There are multiple button components. There are contained buttons which look like a standard button with a background color and drop shadow. As before we need to be sure to import it.
+
+    import { Typography, Button } from "@mui/material";
+
+then
+
+    <Button variant="contained">Subscribe</Button>
+
+The default button variant is Text Button which has no background of drop shadow, only coloured text.
+
+Outlined Buttons have coloured text and outline but no bg colour.
+
+There are many others we will look at like buttons with icons etc.
+
+If we want a few buttons to fit together like a single 'capsule' or say buttons on a tape deck we can import the ButtonGroup component to wrap them in. We can also define styling with props on our ButtonGroup that will apply to the child button components
+
+    <ButtonGroup color="secondary" variant="outlined">
+        <Button type="submit">One</Button>
+        <Button type="submit">Two</Button>
+        <Button type="  submit">Three</Button>
+    </ButtonGroup>
+
+We can remove the drop shadow from a button by adding the prop 'disableElevation'
+
+Finally we can easily include functionality like we usually would with an onClick={}
+
+    <Button
+        onClick={() => console.log("clicked!")}
+        type="submit"
+        color="secondary"
+        variant="contained"
+        >
+        Submit
+    </Button>
+
+<--- CONTAINER COMPONENT --->
+
+So far all of our content is touching the left and top sides of the screen with no margin. We can improve this by wrapping everything in a container component.
+
+We import this as usual then put our other components inside it as children. This will apply padding an margin around our components.
+
+It looks like it is centering content but this is back we have a wide screen. I think it actually has a default max-width that is placing out content in the middish of the page; the Container has a max width and is centered but its children are not centered within it.
+
+<--- ICONS --->
+
+Using icons requires an additional packaged. Going back to mui.com and getting started we find there are Font Icons (like wingdings?) and SVG Icons. 
+
+We're going to install SVG icons 'npm install @mui/icons-material'
+
+After installing through the terminal we can go back to mui.com and search for 'material icons'. This will show us a list of the icons now available to us (we can even search for them by name). Clicking on one will give us the code to import it into a file from the library we installed, an aircon snowflake icon for example
+
+    import AcUnitIcon from '@mui/icons-material/AcUnit';
+
+Again we could use braces to import multiple icons on one line
+
+We can then use this as a self closing component tag
+
+    <AcUnitIcon />
+
+The default is black but we can style this as we usually would
+
+    <AcUnitIcon color="error" fontSize="large" />
+
+A common use for icons is inside of buttons. Buttons Components have props for a start and end icon which will appear either side of the button text
+
+    <Button
+        onClick={() => console.log("clicked!")}
+        type="submit"
+        color="primary"
+        variant="contained"
+        startIcon={<AcUnitIcon color="disabled" fontSize="large" />}
+        endIcon={<AcUnitIcon color="disabled" fontSize="large" />}
+    >
+        Stay Frosty
+    </Button>
+
+<--- makeStyles Hook --->
+
+Material UI components come fully styled with built in CSS.
